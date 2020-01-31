@@ -2,6 +2,7 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator, BranchPythonOperator
 from airflow.operators.dummy_operator import DummyOperator
+from airflow.utils.trigger_rule import TriggerRule
 from datetime import datetime, timedelta
 
 
@@ -48,7 +49,7 @@ branching = BranchPythonOperator(
 finish = BashOperator(
     task_id='finish',
     bash_command='echo "finished!"',
-    trigger_rule='none_failed',
+    trigger_rule=TriggerRule.ONE_SUCCESS,
     retries=3,
     dag=dag)
 
@@ -65,5 +66,5 @@ weekday_person_to_email = {
     6: "email_Alice",
 }
 
-for day, name in weekday_person_to_email.items():
+for name in set(weekday_person_to_email.values()):
     start >> branching >> DummyOperator(task_id=name, dag=dag) >> finish
