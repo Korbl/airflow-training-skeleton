@@ -27,7 +27,7 @@ def _print_exec_date(**context):
     print(context["execution_date"])
 
 
-dag = DAG('Pyton-operation', default_args=default_args, schedule_interval=timedelta(days=1))
+dag = DAG('Python-operation', default_args=default_args, schedule_interval=timedelta(days=1))
 
 # t1, t2 and t3 are examples of tasks created by instantiating operators
 t1 = PythonOperator(
