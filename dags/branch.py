@@ -56,5 +56,16 @@ finish = BashOperator(
 
 
 days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-for day in days:
-    start >> branching >> DummyOperator(task_id=day, dag=dag) >> finish
+
+weekday_person_to_email = {
+    0: "Bob",
+    1: "Joe",
+    2: "Alice",
+    3: "Joe",
+    4: "Alice",
+    5: "Alice",
+    6: "Alice",
+}
+
+for day, name in weekday_person_to_email.items():
+    start >> branching >> DummyOperator(task_id="email_{}".format(name), dag=dag) >> finish
