@@ -48,7 +48,7 @@ branching = BranchPythonOperator(
 finish = BashOperator(
     task_id='finish',
     bash_command='echo "finished!"',
-    trigger_rule='none_failed'
+    trigger_rule='none_failed',
     retries=3,
     dag=dag)
 
