@@ -33,20 +33,20 @@ t2 = BashOperator(
     dag=dag)
 
 t3 = BashOperator(
-    task_id='sleep',
+    task_id='sleep-3',
     bash_command='sleep 5',
     retries=3,
     dag=dag)
 
 t4 = BashOperator(
-    task_id='sleep',
+    task_id='sleep-4',
     bash_command='sleep 5',
     retries=3,
     dag=dag)
 
 
 t5 = BashOperator(
-    task_id='sleep',
+    task_id='sleep-5',
     bash_command='sleep 5',
     retries=3,
     dag=dag)
