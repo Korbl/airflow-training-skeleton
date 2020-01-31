@@ -26,9 +26,8 @@ default_args = {
 def _print_exec_date(**context):
     print(context["execution_date"])
 
-
-def _get_weekday():
-    return datetime.today().weekday()
+def _return_task(**context):
+    return weekday_person_to_email[datetime.today().weekday()]
 
 
 dag = DAG('PythonBranch-operation', default_args=default_args, schedule_interval=timedelta(days=1))
@@ -43,7 +42,7 @@ start = PythonOperator(
 
 branching = BranchPythonOperator(
     task_id="branching",
-    python_callable=_get_weekday,
+    python_callable=_return_task,
     provide_context=True, dag=dag)
 
 finish = BashOperator(
@@ -56,14 +55,14 @@ finish = BashOperator(
 #days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
 weekday_person_to_email = {
-    0: "Bob",
-    1: "Joe",
-    2: "Alice",
-    3: "Joe",
-    4: "Alice",
-    5: "Alice",
-    6: "Alice",
+    0: "email_Bob",
+    1: "email_Joe",
+    2: "email_Alice",
+    3: "email_Joe",
+    4: "email_Alice",
+    5: "email_Alice",
+    6: "email_Alice",
 }
 
 for day, name in weekday_person_to_email.items():
-    start >> branching >> DummyOperator(task_id="email_{}".format(name), dag=dag) >> finish
+    start >> branching >> DummyOperator(task_id=name, dag=dag) >> finish
