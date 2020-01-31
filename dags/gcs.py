@@ -31,7 +31,7 @@ SQL_QUERY = "select * from land_registry_price_paid_uk LIMIT 100;"
 
 default_args = {"start_date": airflow.utils.dates.days_ago(1)}
 
-dag = DAG('Python-operation', default_args=default_args, schedule_interval=timedelta(days=1))
+dag = DAG('Postgres-operation', default_args=default_args, schedule_interval=timedelta(days=1))
 
 upload_data = PostgresToGoogleCloudStorageOperator(
     task_id="get_data",
