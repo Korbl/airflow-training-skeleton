@@ -34,6 +34,7 @@ default_args = {"start_date": airflow.utils.dates.days_ago(1)}
 dag = DAG('Postgres-operation', default_args=default_args, schedule_interval=timedelta(days=1))
 
 upload_data = PostgresToGoogleCloudStorageOperator(
+    postgres_conn_id='postgres_gcs',
     task_id="get_data",
     sql=SQL_QUERY,
     bucket=GCS_BUCKET,
