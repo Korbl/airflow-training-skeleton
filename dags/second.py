@@ -1,5 +1,5 @@
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator, PythonOperator
+from airflow.operators.bash_operator import BashOperator, PythonOperator, DummyOperator
 from datetime import datetime, timedelta
 
 
@@ -55,7 +55,7 @@ t4 = BashOperator(
     retries=3,
     dag=dag)
 
-t5 = Dummyperator(
+t5 = DummyOperator(
     task_id='Done',
     dag=dag)
 
