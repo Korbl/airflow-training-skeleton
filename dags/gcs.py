@@ -14,7 +14,7 @@ default_args = {
     'email_on_retry': False,
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
-    'postgres_conn_id': 'connid'
+    'postgres_conn_id': 'postgres_gcs'
     # 'schedule_interval': "15 08 * * *",
     # 'schedule_interval': timedelta(minutes=150)
     # 'schedule_interval': "@daily"
