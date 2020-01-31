@@ -16,7 +16,7 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
     # 'schedule_interval': "15 08 * * *",
     # 'schedule_interval': timedelta(minutes=150)
-    'schedule_interval': "@daily"
+    # 'schedule_interval': "@daily"
     # 'queue': 'bash_queue',
     # 'pool': 'backfill',
     # 'priority_weight': 10,
@@ -27,7 +27,7 @@ def _print_exec_date(**context):
     print(context["execution_date"])
 
 
-dag = DAG('new-time', default_args=default_args, schedule_interval=timedelta(days=1))
+dag = DAG('Pyton-operation', default_args=default_args, schedule_interval=timedelta(days=1))
 
 # t1, t2 and t3 are examples of tasks created by instantiating operators
 t1 = PythonOperator(
