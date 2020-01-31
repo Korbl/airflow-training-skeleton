@@ -27,8 +27,8 @@ def _print_exec_date(**context):
     print(context["execution_date"])
 
 
-def _get_weekday(execution_date, **context):
-    return execution_date.strftime("%a")
+def _get_weekday():
+    return datetime.today().weekday()
 
 
 dag = DAG('PythonBranch-operation', default_args=default_args, schedule_interval=timedelta(days=1))
@@ -39,8 +39,6 @@ start = PythonOperator(
     provide_context=True,
     python_callable=_print_exec_date,
     dag=dag,
-
-
 )
 
 branching = BranchPythonOperator(
@@ -55,7 +53,7 @@ finish = BashOperator(
     dag=dag)
 
 
-days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+#days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
 weekday_person_to_email = {
     0: "Bob",
