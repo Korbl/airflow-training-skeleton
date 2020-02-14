@@ -1,7 +1,7 @@
 import airflow
 from airflow import DAG
 from airflow.contrib.operators.postgres_to_gcs_operator import PostgresToGoogleCloudStorageOperator
-from airflow.contrib.operators.dataproc_operator import DataprocClusterCreateOperator
+from airflow.contrib.operators.dataproc_operator import DataprocClusterCreateOperator, DataprocClusterDeleteOperator
 from operators.httptogcsoperator import HttpToGcsOperator
 from airflow.utils.trigger_rule import TriggerRule
 from datetime import datetime, timedelta
@@ -62,5 +62,13 @@ create_cluster = DataprocClusterCreateOperator(
     dag=dag,
 )
 
+destroy_cluster = DataprocClusterDeleteOperator(
+    task_id='CreateCluster',
+    cluster_name="analyse-pricing-{{ ds }}",
+    project_id="afspfeb3-0f44dce6cdbd5bd3e4c47",
+    num_workers=2,
+    zone="europe-west4-a",
+    dag=dag,
+)
 
-[upload_data, fetch_conversion] >> create_cluster
+[upload_data, fetch_conversion] >> create_cluster >> destroy_cluster
