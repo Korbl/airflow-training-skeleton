@@ -47,7 +47,7 @@ upload_data = PostgresToGoogleCloudStorageOperator(
 fetch_conversion = HttpToGcsOperator(
     task_id="fetch_converstion",
     gcs_bucket=GCS_BUCKET,
-    gcs_path="/converstion",
+    gcs_path="converstion.json",
     endpoint="history?start_at=2019-01-01&end_at=2020-01-01&symbols=EUR&base=GBP",
     dag=dag
 )
