@@ -11,7 +11,7 @@ class LaunchLibraryOperator(BaseOperator):
     template_fields = ('_params')
 
     @apply_defaults
-    def __init__(self, task_id, conn_id, endpoints, result_path, result_filename, *args, **kwargs):
+    def __init__(self, task_id, conn_id, endpoints, result_path, result_filename, params, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.task_id = task_id
         self.conn_id = conn_id
