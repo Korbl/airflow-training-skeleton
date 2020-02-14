@@ -48,6 +48,6 @@ fetch_conversion = HttpToGcsOperator(
     task_id="fetch_converstion",
     gcs_bucket=GCS_BUCKET,
     gcs_path="/converstion",
-    endpoint=f"https://api.exchangeratesapi.io/history?start_at={default_args[start_date]}&end_at={default_args[start_date]}&symbols=EUR&base=GBP",
+    endpoint=f"https://api.exchangeratesapi.io/history?start_at={default_args['start_date']}&end_at={default_args['start_date']}&symbols=EUR&base=GBP",
     dag=dag
 )
