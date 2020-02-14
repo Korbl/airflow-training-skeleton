@@ -52,4 +52,14 @@ fetch_conversion = HttpToGcsOperator(
     dag=dag
 )
 
-[upload_data, fetch_conversion]
+create_cluster = DataprocClusterCreateOperator(
+    task_id='CreateCluster',
+    cluster_name="analyse-pricing-{{ ds }}",
+    project_id="afspfeb3-9d4bdb09f618016d0bc39",
+    num_workers=2,
+    zone="europe-west4-a",
+    dag=dag,
+)
+
+
+[upload_data, fetch_conversion] >> create_cluster
