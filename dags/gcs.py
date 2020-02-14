@@ -63,7 +63,7 @@ create_cluster = DataprocClusterCreateOperator(
 )
 
 destroy_cluster = DataprocClusterDeleteOperator(
-    task_id='CreateCluster',
+    task_id='DeleteCluster',
     cluster_name="analyse-pricing-{{ ds }}",
     project_id="afspfeb3-0f44dce6cdbd5bd3e4c47",
     num_workers=2,
