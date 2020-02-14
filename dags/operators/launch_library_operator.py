@@ -8,7 +8,7 @@ from airflow.contrib.hooks.gcs_hook import GoogleCloudStorageHook
 class LaunchLibraryOperator(BaseOperator):
     ui_color = '#555'
     ui_fgcolor = '#fff'
-    template_fields = ('ds', 'tomorrow_ds')
+    template_fields = ('_params')
 
     @apply_defaults
     def __init__(self, task_id, conn_id, endpoints, result_path, result_filename, *args, **kwargs):
@@ -27,7 +27,8 @@ class LaunchLibraryOperator(BaseOperator):
         remote_path = path.join(self.result_path, self.result_filename)
         upload_to_gcs(remote_path, self.bucket, self.result_filename)
 
-    def upload_to_gcs(self, bucket, remote_path, response):
+    @property
+    def upload_to_gcs(bucket, remote_path, response):
         gcs = GoogleCloudStorageHook()
         gcs.upload(bucket, remote_path, json.dumps(response),
                    mime_type='application/octet-stream')
