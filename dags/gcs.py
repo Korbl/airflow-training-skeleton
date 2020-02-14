@@ -51,3 +51,5 @@ fetch_conversion = HttpToGcsOperator(
     endpoint="history?start_at=2019-01-01&end_at=2020-01-01&symbols=EUR&base=GBP",
     dag=dag
 )
+
+[upload_data, fetch_conversion]
