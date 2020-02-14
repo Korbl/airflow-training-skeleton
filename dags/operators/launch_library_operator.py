@@ -2,10 +2,13 @@ import requests
 import json
 import posixpath
 import pathlib
+from airflow.models import BaseOperator
+from airflow.utils.decorators import apply_defaults
 
 class LaunchLibraryOperator(BaseOperator):
     ui_color = '#555'
     ui_fgcolor = '#fff'
+    template_fields = ('_myvar1',)
 
     @apply_defaults
     def __init__(self, *args, **kwargs):
