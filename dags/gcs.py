@@ -1,7 +1,7 @@
 import airflow
 from airflow import DAG
 from airflow.contrib.operators.postgres_to_gcs_operator import PostgresToGoogleCloudStorageOperator
-from airflow.contrib.operators.DataprocClusterCreateOperator import DataprocClusterCreateOperator
+from airflow.contrib.operators.dataproc_operator import DataprocClusterCreateOperator
 from operators.httptogcsoperator import HttpToGcsOperator
 from airflow.utils.trigger_rule import TriggerRule
 from datetime import datetime, timedelta
