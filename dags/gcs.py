@@ -47,5 +47,7 @@ upload_data = PostgresToGoogleCloudStorageOperator(
 fetch_conversion = HttpToGcsOperator(
     task_id="fetch_converstion",
     gcs_bucket=GCS_BUCKET,
-    gcs_path="/converstion"
+    gcs_path="/converstion",
+    endpoint=f"https://api.exchangeratesapi.io/history?start_at={start_date}&end_at={start_date}&symbols=EUR&base=GBP",
+    dag=dag
 )
