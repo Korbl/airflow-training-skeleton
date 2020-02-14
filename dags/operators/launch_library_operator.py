@@ -1,7 +1,6 @@
 import requests
 import json
-import posixpath
-import pathlib
+from os import path
 from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 from airflow.contrib.hooks.gcs_hook import GoogleCloudStorageHook
@@ -19,22 +18,16 @@ class LaunchLibraryOperator(BaseOperator):
         self.endpoints = endpoints
         self.result_path = result_path
         self.result_filename = result_filename
+        self.bucket = 'europe-west1-training-airfl-fdb83332-bucket'
 
-    def execute(self, ds, tomrrow_ds, result_filename):
+    def execute(self, context, ds, tomorrow_ds):
         query = f"https://launchlibrary.net/1.4/launch?startdate={ds}&enddate={tomorrow_ds}"
-        result_path = f"/tmp/rocket_launches/ds={ds}"
-        pathlib.Path(result_path).mkdir(parents=True, exist_ok=True)
         response = requests.get(query)
         print(f"responsewas {response}")
-        upload_to_gcs(self.result_path, 'europe-west1-training-airfl-fdb83332-bucket', self.result_filename)
+        remote_path = path.join(self.result_path, self.result_filename)
+        upload_to_gcs(remote_path, self.bucket, self.result_filename)
 
-    def upload_to_gcs(local_path, bucket, destination):
+    def upload_to_gcs(self, bucket, remote_path, response):
         gcs = GoogleCloudStorageHook()
-        files_and_dirs = os.listdir(local_path)
-        files_to_upload = [file for file in files_and_dirs if isfile(join(local_path, file))]
-
-        for file in files_to_upload:
-            object = join(destination, file)
-            gcs.upload(bucket, object, join(local_path, file), mime_type='application/octet-stream')
-            # Then delete the file locally
-            os.remove(join(local_path, file))
+        gcs.upload(bucket, remote_path, json.dumps(response),
+                   mime_type='application/octet-stream')
