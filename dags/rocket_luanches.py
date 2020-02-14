@@ -1,6 +1,6 @@
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
-from airflow.operators.launch_library_operator import LaunchLibraryOperator
+from operators.launch_library_operator import LaunchLibraryOperator
 from datetime import datetime, timedelta
 
 default_args = {
