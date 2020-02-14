@@ -11,14 +11,13 @@ class LaunchLibraryOperator(BaseOperator):
     template_fields = ('_params')
 
     @apply_defaults
-    def __init__(self, task_id, conn_id, endpoints, result_path, result_filename, params, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.task_id = task_id
+    def __init__(self, conn_id, endpoints, result_path, result_filename, params, *args, **kwargs):
         self.conn_id = conn_id
         self.endpoints = endpoints
         self.result_path = result_path
         self.result_filename = result_filename
         self.bucket = 'europe-west1-training-airfl-fdb83332-bucket'
+        super().__init__(*args, **kwargs)
 
     def execute(self, context, ds, tomorrow_ds):
         query = f"https://launchlibrary.net/1.4/launch?startdate={ds}&enddate={tomorrow_ds}"
