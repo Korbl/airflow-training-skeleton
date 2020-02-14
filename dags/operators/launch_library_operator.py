@@ -8,7 +8,7 @@ from airflow.contrib.hooks.gcs_hook import GoogleCloudStorageHook
 class LaunchLibraryOperator(BaseOperator):
     ui_color = '#555'
     ui_fgcolor = '#fff'
-    template_fields = ('_params')
+    template_fields = ('_params',)
 
     @apply_defaults
     def __init__(self, conn_id, endpoints, result_path, result_filename, params, *args, **kwargs):
