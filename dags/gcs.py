@@ -42,3 +42,9 @@ upload_data = PostgresToGoogleCloudStorageOperator(
     gzip=False,
     dag=dag
 )
+
+fetch_conversion = HttpToGcsOperator(
+    task_id="fetch_converstion",
+    gcs_bucket=GCS_BUCKET,
+    gcs_path="/converstion"
+)
